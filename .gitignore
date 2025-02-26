@@ -1,0 +1,61 @@
+# Unity generated folders  
+/Library/  
+/Logs/  
+/Temp/  
+/Obj/  
+/Build/  
+/Builds/  
+/MemoryCaptures/  
+
+# User-specific settings  
+/UserSettings/  
+
+# Visual Studio / JetBrains Rider  
+.vscode/  
+/*.csproj  
+/*.unityproj  
+/*.sln  
+/*.suo  
+/*.tmp  
+/*.user  
+/*.userprefs  
+/*.pidb  
+/*.booproj  
+/*.svd  
+*.db  
+
+# Unity Asset Store packages  
+/Assets/Plugins/*/*/Examples/  
+
+# Ignore crash reports  
+/CrashReports/  
+
+# Ignore .meta files in certain cases  
+*.meta  
+
+# Ignore compiled files  
+*.dll  
+*.exe  
+*.pdb  
+*.class  
+*.jar  
+*.apk  
+*.ipa  
+*.dSYM.zip  
+*.dSYM  
+
+# Ignore temporary Unity auto-generated files  
+*.ilk  
+*.obj  
+*.so  
+*.idb  
+*.pidb  
+*.swp  
+*.wdb  
+*.opendb  
+*.VC.db  
+
+# Ignore logs and caches  
+*.log  
+*.stackdump  
+*.tmproj  
