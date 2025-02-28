@@ -6,66 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SignUp_Scene.unity
+    path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/AdvertisementPage_1.unity
-    guid: ba91e20ca7dfa9b449216b0f1bf5914b
-  - enabled: 1
-    path: Assets/Scenes/AdvertisementPage_Create.unity
-    guid: f557e21549d932845a1074d1342bce1a
-  - enabled: 1
-    path: Assets/Scenes/NewLogin.unity
-    guid: 344df00bc77b36747a15e91bbeb73d4f
-  - enabled: 1
-    path: Assets/Scenes/WalletPage.unity
-    guid: 2d234ac4686c3d84cb506065f64c75c0
-  - enabled: 1
-    path: Assets/Scenes/Wallet(sendMoney).unity
-    guid: 22951644e7f47b548855938029356e7d
-  - enabled: 1
-    path: Assets/Scenes/JobsPage.unity
-    guid: 316e115069e118a4487cbf04f87f633f
-  - enabled: 1
-    path: Assets/Scenes/MarketPage.unity
-    guid: 96330ba5b1dc561418cd44f1e5757ce8
-  - enabled: 1
-    path: Assets/Scenes/CommunitiesPage.unity
-    guid: 77f8cad046a004944a40f2906280acb4
-  - enabled: 1
-    path: Assets/Scenes/AlbumPage.unity
-    guid: cacb5eb28497e984eb76241a3a78c4e2
-  - enabled: 1
-    path: Assets/Scenes/Articles.unity
-    guid: 4343f9de0cd2cf042b12c05bfb32f640
-  - enabled: 1
-    path: Assets/Scenes/SignUp2_old.unity
-    guid: 495ca47fdf6ade746be27dc3fa90911f
-  - enabled: 1
-    path: Assets/Scenes/NewSignUp2.unity
-    guid: f7e991975a32f2b41bebf31b96bb124e
-  - enabled: 1
-    path: Assets/Scenes/SignUp4.unity
-    guid: 90519a47c0b254441a914450eee0d0e3
-  - enabled: 1
-    path: Assets/Scenes/NewJobsPage.unity
-    guid: b72228ee344ac4e40b82ee8dec4f96d5
-  - enabled: 1
-    path: Assets/Scenes/Feeds.unity
-    guid: 4b167a48f05d4bb43bf296d703ae8898
-  - enabled: 1
-    path: Assets/Scenes/NewSignUp1.unity
-    guid: 1d6bc5606b658b44393b02079fca6230
-  - enabled: 1
-    path: Assets/Scenes/NewSignUp3.unity
-    guid: 1da0957f69f3e5545b2972c70fcec131
-  - enabled: 1
-    path: Assets/Scenes/NewSignUp4.unity
-    guid: 429c644cb6ebac34aa9a68c478f1390e
-  - enabled: 1
-    path: Assets/Scenes/NewSignUp5.unity
-    guid: 6e0bcfc7e3ae4bd47872d48d7d27b9d5
   m_configObjects:
-    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 5c38c9650b10c3b4ea5fb617d59eaa4f, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 19be7943fe2114248b974128c03626ed, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
