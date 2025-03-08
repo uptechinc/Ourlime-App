@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /*using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -155,6 +156,25 @@ using System;
 using System.Collections.Generic;
 
 public class PostCreationHandler : MonoBehaviour
+=======
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Video;
+using NativeGalleryNamespace;
+using UnityEngine.Android;
+using UnityEngine.EventSystems;
+using System.IO;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+public class PostCreationHandler : MonoBehaviour, IDropHandler
+>>>>>>> Stashed changes
 {
     [Header("UI References")]
     public GameObject formPanel;
@@ -165,24 +185,65 @@ public class PostCreationHandler : MonoBehaviour
     public TMP_InputField hashtagsInput;
     public TMP_InputField referenceInput;
     public Button submitButton;
+<<<<<<< Updated upstream
+=======
+    public TMP_Text mediaErrorText;
+>>>>>>> Stashed changes
 
     [Header("Post Settings")]
     public GameObject postPrefab;
     public Transform feedContent;
+<<<<<<< Updated upstream
 
     [Header("Media Settings")]
     public Texture2D defaultMedia;
 
     private Texture2D selectedMedia;
     private List<PostData> allPosts = new List<PostData>();
+=======
+    public RenderTexture videoRenderTextureTemplate;
+
+    [Header("Media Settings")]
+    public Texture2D defaultMedia;
+    public VideoPlayer videoPreview;
+
+    [Header("Drag & Drop")]
+    public GameObject dragDropOverlay;
+
+    private Texture2D selectedImage;
+    private string selectedVideoPath;
+    private List<PostData> allPosts = new List<PostData>();
+    private bool isPosting = false;
+>>>>>>> Stashed changes
 
     void Start()
     {
         formPanel.SetActive(false);
+<<<<<<< Updated upstream
         submitButton.onClick.AddListener(HandlePostCreation);
         ClearForm();
     }
 
+=======
+        submitButton.onClick.RemoveAllListeners(); // Ensure no duplicate listeners
+        submitButton.onClick.AddListener(HandlePostCreation);
+        
+        #if UNITY_ANDROID
+        RequestStoragePermission();
+        #endif
+    }
+
+    #if UNITY_ANDROID
+    private void RequestStoragePermission()
+    {
+        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
+        {
+            Permission.RequestUserPermission(Permission.ExternalStorageRead);
+        }
+    }
+    #endif
+
+>>>>>>> Stashed changes
     public void OpenForm()
     {
         formPanel.SetActive(true);
@@ -196,6 +257,7 @@ public class PostCreationHandler : MonoBehaviour
         descriptionInput.text = "";
         hashtagsInput.text = "";
         referenceInput.text = "";
+<<<<<<< Updated upstream
         selectedMedia = null;
         mediaPreview.texture = defaultMedia;
     }
@@ -204,10 +266,76 @@ public class PostCreationHandler : MonoBehaviour
     {
         selectedMedia = media;
         mediaPreview.texture = media;
+=======
+        
+        selectedImage = null;
+        selectedVideoPath = null;
+        
+        mediaPreview.texture = defaultMedia;
+        mediaPreview.gameObject.SetActive(true);
+        
+        videoPreview.Stop();
+        videoPreview.gameObject.SetActive(false);
+        mediaErrorText.text = "";
+    }
+
+    public void OnUploadButtonClick()
+    {
+        NativeGallery.GetMixedMediaFromGallery((path) =>
+        {
+            if (string.IsNullOrEmpty(path)) return;
+
+            string extension = Path.GetExtension(path).ToLower();
+            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
+            {
+                LoadImage(path);
+            }
+            else if (extension == ".mp4")
+            {
+                LoadVideo(path);
+            }
+            else
+            {
+                mediaErrorText.text = "Unsupported file type!";
+            }
+        }, NativeGallery.MediaType.Image | NativeGallery.MediaType.Video, "Select Media");
+    }
+
+    private void LoadImage(string path)
+    {
+        Texture2D texture = NativeGallery.LoadImageAtPath(path, 2048, false);
+        if (texture == null)
+        {
+            mediaErrorText.text = "Failed to load image!";
+            return;
+        }
+
+        selectedImage = texture;
+        selectedVideoPath = null;
+        mediaPreview.texture = texture;
+        mediaErrorText.text = "";
+    }
+
+    private void LoadVideo(string path)
+    {
+        selectedVideoPath = path;
+        selectedImage = null;
+        mediaPreview.gameObject.SetActive(false);
+        
+        videoPreview.gameObject.SetActive(true);
+        videoPreview.url = path;
+        videoPreview.Prepare();
+        videoPreview.prepareCompleted += (source) =>
+        {
+            videoPreview.Play();
+        };
+        mediaErrorText.text = "Video selected!";
+>>>>>>> Stashed changes
     }
 
     public void HandlePostCreation()
     {
+<<<<<<< Updated upstream
         PostData newPost = new PostData
         {
             privacy = privacyDropdown.options[privacyDropdown.value].text,
@@ -223,11 +351,46 @@ public class PostCreationHandler : MonoBehaviour
         InstantiatePost(newPost);
         formPanel.SetActive(false);
         ClearForm();
+=======
+        if (isPosting) return;
+        isPosting = true;
+
+        try
+        {
+            PostData newPost = new PostData(
+                captionInput.text,
+                descriptionInput.text,
+                hashtagsInput.text,
+                referenceInput.text,
+                privacyDropdown.options[privacyDropdown.value].text,
+                DateTime.Now,
+                selectedImage != null ? CopyTexture(selectedImage) : null,
+                selectedVideoPath
+            );
+
+            allPosts.Add(newPost);
+            InstantiatePost(newPost);
+        }
+        finally
+        {
+            formPanel.SetActive(false);
+            isPosting = false;
+        }
+    }
+
+    private Texture2D CopyTexture(Texture2D source)
+    {
+        Texture2D copy = new Texture2D(source.width, source.height);
+        copy.SetPixels(source.GetPixels());
+        copy.Apply();
+        return copy;
+>>>>>>> Stashed changes
     }
 
     private void InstantiatePost(PostData postData)
     {
         GameObject newPost = Instantiate(postPrefab, feedContent);
+<<<<<<< Updated upstream
         newPost.GetComponent<PostDisplay>().Initialize(postData);
     }
 
@@ -243,6 +406,48 @@ public class PostCreationHandler : MonoBehaviour
     }
 
     // For future database implementation
+=======
+        PostDisplay display = newPost.GetComponent<PostDisplay>();
+        
+        RenderTexture rt = new RenderTexture(videoRenderTextureTemplate);
+        display.Initialize(postData, rt);
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        dragDropOverlay.SetActive(false);
+
+        #if UNITY_EDITOR
+        string[] paths = DragAndDrop.paths;
+        #else
+        string[] paths = null;
+        #endif
+
+        if (paths == null || paths.Length == 0) return;
+
+        string path = paths[0];
+        string extension = Path.GetExtension(path).ToLower();
+        if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
+        {
+            LoadImage(path);
+        }
+        else if (extension == ".mp4")
+        {
+            LoadVideo(path);
+        }
+    }
+
+    public void OnDragEnter(PointerEventData eventData)
+    {
+        dragDropOverlay.SetActive(true);
+    }
+
+    public void OnDragExit(PointerEventData eventData)
+    {
+        dragDropOverlay.SetActive(false);
+    }
+
+>>>>>>> Stashed changes
     public void SavePosts()
     {
         string jsonData = JsonUtility.ToJson(new Serialization<PostData>(allPosts));
@@ -251,6 +456,7 @@ public class PostCreationHandler : MonoBehaviour
 
     public void LoadPosts()
     {
+<<<<<<< Updated upstream
         if(PlayerPrefs.HasKey("SavedPosts"))
         {
             string jsonData = PlayerPrefs.GetString("SavedPosts");
@@ -260,6 +466,24 @@ public class PostCreationHandler : MonoBehaviour
             {
                 InstantiatePost(post);
             }
+=======
+        if (!PlayerPrefs.HasKey("SavedPosts")) return;
+        
+        string jsonData = PlayerPrefs.GetString("SavedPosts");
+        allPosts = JsonUtility.FromJson<Serialization<PostData>>(jsonData).ToList();
+        
+        foreach (PostData post in allPosts)
+        {
+            InstantiatePost(post);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (selectedImage != null)
+        {
+            Destroy(selectedImage);
+>>>>>>> Stashed changes
         }
     }
 }
