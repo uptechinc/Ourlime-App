@@ -1,91 +1,25 @@
-<<<<<<< Updated upstream
-/*using UnityEngine;
-using UnityEngine.UI;
-using System;
-
-public class PostDisplay : MonoBehaviour
-{
-    [Header("UI Components")]
-    [SerializeField] private Text privacyBadge;
-    [SerializeField] private Text captionText;
-    [SerializeField] private Text descriptionText;
-    [SerializeField] private RawImage mediaDisplay;
-    [SerializeField] private Text hashtagsText;
-    [SerializeField] private Text referenceText;
-    [SerializeField] private Text timestampText;
-
-    public void Initialize(PostData postData)
-    {
-        privacyBadge.text = postData.privacyLevel;
-        captionText.text = postData.caption;
-        descriptionText.text = postData.description;
-        hashtagsText.text = FormatHashtags(postData.hashtags);
-        referenceText.text = postData.reference;
-        timestampText.text = postData.timestamp.ToString("MMM dd yyyy - h:mm tt");
-
-        if(postData.media != null)
-        {
-            mediaDisplay.texture = postData.media;
-            mediaDisplay.gameObject.SetActive(true);
-            
-            AspectRatioFitter arf = mediaDisplay.GetComponent<AspectRatioFitter>();
-            if(arf != null)
-            {
-                arf.aspectRatio = (float)postData.media.width / postData.media.height;
-            }
-        }
-        else
-        {
-            mediaDisplay.gameObject.SetActive(false);
-        }
-    }
-
-    private string FormatHashtags(string rawHashtags)
-    {
-        string formatted = "";
-        string[] tags = rawHashtags.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-        foreach(string tag in tags)
-        {
-            formatted += $"<color=#00B4FF>#{tag.Trim()}</color> ";
-        }
-        return formatted;
-    }
-}*/
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-=======
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Video;
 using System.Collections;
->>>>>>> Stashed changes
 
 public class PostDisplay : MonoBehaviour
 {
     [Header("UI Components")]
     public TextMeshProUGUI captionText;
     public TextMeshProUGUI descriptionText;
-<<<<<<< Updated upstream
-    public RawImage mediaDisplay;
-=======
     public RawImage imageDisplay;
     public RawImage videoDisplay;
     public VideoPlayer videoPlayer;
     public Button playButton;
     public Button pauseButton;
     public Slider videoTimeline;
->>>>>>> Stashed changes
     public TextMeshProUGUI hashtagsText;
     public TextMeshProUGUI referenceText;
     public TextMeshProUGUI privacyBadge;
     public TextMeshProUGUI postDateText;
 
-<<<<<<< Updated upstream
-    public void Initialize(PostData data)
-    {
-=======
     private RenderTexture currentRenderTexture;
     private bool isDraggingTimeline = false;
 
@@ -115,7 +49,6 @@ public class PostDisplay : MonoBehaviour
         videoTimeline.gameObject.SetActive(false);
 
         // Set text fields
->>>>>>> Stashed changes
         captionText.text = data.caption;
         descriptionText.text = data.description;
         hashtagsText.text = data.hashtags;
@@ -123,10 +56,6 @@ public class PostDisplay : MonoBehaviour
         privacyBadge.text = data.privacy;
         postDateText.text = data.postDate.ToString("MMM dd, yyyy - HH:mm");
 
-<<<<<<< Updated upstream
-        mediaDisplay.texture = data.media ?? Texture2D.blackTexture;
-        mediaDisplay.gameObject.SetActive(data.media != null);
-=======
         // Display image if available
         if (data.image != null)
         {
@@ -197,6 +126,5 @@ public class PostDisplay : MonoBehaviour
             videoPlayer.time = value * videoPlayer.length;
             isDraggingTimeline = false;
         }
->>>>>>> Stashed changes
     }
 }
